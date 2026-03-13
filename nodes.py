@@ -76,6 +76,9 @@ class ImageUnderstanding:
                 "frequency_penalty": ("FLOAT", {
                     "default": 0.5, "min": -2.0, "max": 2.0, "step": 0.01,
                 }),
+                "enable_thinking": ("BOOLEAN", {
+                    "default": False,
+                }),
                 "seed": ("INT", {
                     "default": -1, "min": -1, "max": 2**31 - 1, "step": 1,
                 }),
@@ -89,7 +92,7 @@ class ImageUnderstanding:
 
     def run(self, image, system_prompt, user_prompt, model, base_url,
             max_tokens, temperature, top_p, top_k,
-            presence_penalty, frequency_penalty, seed):
+            presence_penalty, frequency_penalty, enable_thinking, seed):
         actual_seed = seed if seed >= 0 else random.randint(0, 2**31 - 1)
         image_b64 = _tensor_to_base64(image)
 
@@ -112,7 +115,8 @@ class ImageUnderstanding:
             presence_penalty=presence_penalty,
             frequency_penalty=frequency_penalty,
             seed=actual_seed,
-            extra_body={"top_k": top_k},
+            extra_body={"top_k": top_k,
+                        "enable_thinking": enable_thinking},
         )
         elapsed = time.time() - t0
 
@@ -155,6 +159,9 @@ class TextGeneration:
                 "frequency_penalty": ("FLOAT", {
                     "default": 0.5, "min": -2.0, "max": 2.0, "step": 0.01,
                 }),
+                "enable_thinking": ("BOOLEAN", {
+                    "default": False,
+                }),
                 "seed": ("INT", {
                     "default": -1, "min": -1, "max": 2**31 - 1, "step": 1,
                 }),
@@ -168,7 +175,7 @@ class TextGeneration:
 
     def run(self, system_prompt, user_prompt, model, base_url,
             max_tokens, temperature, top_p, top_k,
-            presence_penalty, frequency_penalty, seed):
+            presence_penalty, frequency_penalty, enable_thinking, seed):
         actual_seed = seed if seed >= 0 else random.randint(0, 2**31 - 1)
 
         client = OpenAI(base_url=base_url, api_key="EMPTY")
@@ -187,7 +194,8 @@ class TextGeneration:
             presence_penalty=presence_penalty,
             frequency_penalty=frequency_penalty,
             seed=actual_seed,
-            extra_body={"top_k": top_k},
+            extra_body={"top_k": top_k,
+                        "enable_thinking": enable_thinking},
         )
         elapsed = time.time() - t0
 
