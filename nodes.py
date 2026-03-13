@@ -116,7 +116,7 @@ class ImageUnderstanding:
             frequency_penalty=frequency_penalty,
             seed=actual_seed,
             extra_body={"top_k": top_k,
-                        "enable_thinking": enable_thinking},
+                        "chat_template_kwargs": {"enable_thinking": enable_thinking},},
         )
         elapsed = time.time() - t0
 
@@ -195,7 +195,7 @@ class TextGeneration:
             frequency_penalty=frequency_penalty,
             seed=actual_seed,
             extra_body={"top_k": top_k,
-                        "enable_thinking": enable_thinking},
+                        "chat_template_kwargs": {"enable_thinking": enable_thinking},},
         )
         elapsed = time.time() - t0
 
