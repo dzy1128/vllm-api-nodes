@@ -1,4 +1,5 @@
 import io
+import os
 import time
 import random
 import base64
@@ -12,7 +13,7 @@ MODEL_LIST = [
     "Qwen/Qwen3.5-0.8B",
 ]
 
-DEFAULT_BASE_URL = "http://192.168.207.229:8000/v1"
+DEFAULT_BASE_URL = os.environ.get("QWEN_3_5_EXTERNAL_URL", "")
 
 
 def _build_log(model, base_url, tokens_usage, elapsed, extra=None):
