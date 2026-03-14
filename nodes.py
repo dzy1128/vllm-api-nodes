@@ -80,7 +80,7 @@ class ImageUnderstanding:
                     "default": False,
                 }),
                 "seed": ("INT", {
-                    "default": -1, "min": -1, "max": 2**31 - 1, "step": 1,
+                    "default": -1, "min": -1, "max": 0xffffffffffffffff, "step": 1,
                 }),
             },
         }
@@ -93,7 +93,7 @@ class ImageUnderstanding:
     def run(self, image, system_prompt, user_prompt, model, base_url,
             max_tokens, temperature, top_p, top_k,
             presence_penalty, frequency_penalty, enable_thinking, seed):
-        actual_seed = seed if seed >= 0 else random.randint(0, 2**31 - 1)
+        actual_seed = seed if seed >= 0 else random.randint(0, 0xffffffffffffffff)
         image_b64 = _tensor_to_base64(image)
 
         client = OpenAI(base_url=base_url, api_key="EMPTY")
@@ -163,7 +163,7 @@ class TextGeneration:
                     "default": False,
                 }),
                 "seed": ("INT", {
-                    "default": -1, "min": -1, "max": 2**31 - 1, "step": 1,
+                    "default": -1, "min": -1, "max": 0xffffffffffffffff, "step": 1,
                 }),
             },
         }
@@ -176,7 +176,7 @@ class TextGeneration:
     def run(self, system_prompt, user_prompt, model, base_url,
             max_tokens, temperature, top_p, top_k,
             presence_penalty, frequency_penalty, enable_thinking, seed):
-        actual_seed = seed if seed >= 0 else random.randint(0, 2**31 - 1)
+        actual_seed = seed if seed >= 0 else random.randint(0, 0xffffffffffffffff)
 
         client = OpenAI(base_url=base_url, api_key="EMPTY")
         messages = [
