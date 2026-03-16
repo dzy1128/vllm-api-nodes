@@ -13,6 +13,7 @@ MODEL_LIST = [
     "Qwen/Qwen3.5-0.8B",
 ]
 
+
 DEFAULT_BASE_URL = os.environ.get("QWEN_3_5_EXTERNAL_URL", "")
 
 
@@ -58,7 +59,6 @@ class ImageUnderstanding:
                     "multiline": True,
                 }),
                 "model": (MODEL_LIST,),
-                "base_url": ("STRING", {"default": DEFAULT_BASE_URL}),
                 "max_tokens": ("INT", {
                     "default": 4096, "min": 1, "max": 32768, "step": 1,
                 }),
