@@ -13,8 +13,9 @@ MODEL_LIST = [
     "Qwen/Qwen3.5-0.8B",
 ]
 
+QWEN_3_5_INTERNAL_URL = os.environ.get("QWEN_3_5_INTERNAL_URL", "")
+DEFAULT_BASE_URL = os.environ.get("QWEN_3_5_EXTERNAL_URL", QWEN_3_5_INTERNAL_URL)
 
-DEFAULT_BASE_URL = os.environ.get("QWEN_3_5_EXTERNAL_URL", "")
 
 
 def _build_log(model, tokens_usage, elapsed, extra=None):
