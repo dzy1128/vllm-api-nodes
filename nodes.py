@@ -141,7 +141,6 @@ class TextGeneration:
                     "multiline": True,
                 }),
                 "model": (MODEL_LIST,),
-                "base_url": ("STRING", {"default": DEFAULT_BASE_URL}),
                 "max_tokens": ("INT", {
                     "default": 4096, "min": 1, "max": 32768, "step": 1,
                 }),
