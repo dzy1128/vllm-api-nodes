@@ -17,10 +17,10 @@ MODEL_LIST = [
 DEFAULT_BASE_URL = os.environ.get("QWEN_3_5_EXTERNAL_URL", "")
 
 
-def _build_log(model, base_url, tokens_usage, elapsed, extra=None):
+def _build_log(model, tokens_usage, elapsed, extra=None):
     lines = [
         f"Model: {model}",
-        f"Endpoint: {base_url}",
+        f"Endpoint: {DEFAULT_BASE_URL}",
     ]
     if tokens_usage:
         lines += [
@@ -91,13 +91,13 @@ class ImageUnderstanding:
     FUNCTION = "run"
     CATEGORY = "vLLM API"
 
-    def run(self, image, system_prompt, user_prompt, model, base_url,
+    def run(self, image, system_prompt, user_prompt, model,
             max_tokens, temperature, top_p, top_k,
             presence_penalty, frequency_penalty, enable_thinking, seed):
         actual_seed = seed if seed >= 0 else random.randint(0, 0x7fffffffffffffff)
         image_b64 = _tensor_to_base64(image)
 
-        client = OpenAI(base_url=base_url, api_key="EMPTY")
+        client = OpenAI(base_url=DEFAULT_BASE_URL, api_key="EMPTY")
         messages = [
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": [
@@ -122,7 +122,7 @@ class ImageUnderstanding:
         elapsed = time.time() - t0
 
         content = resp.choices[0].message.content
-        log = _build_log(model, base_url, resp.usage, elapsed,
+        log = _build_log(model, resp.usage, elapsed,
                          extra=[f"Seed: {actual_seed}"])
         return (content, log)
 
@@ -173,12 +173,12 @@ class TextGeneration:
     FUNCTION = "run"
     CATEGORY = "vLLM API"
 
-    def run(self, system_prompt, user_prompt, model, base_url,
+    def run(self, system_prompt, user_prompt, model,
             max_tokens, temperature, top_p, top_k,
             presence_penalty, frequency_penalty, enable_thinking, seed):
         actual_seed = seed if seed >= 0 else random.randint(0, 0x7fffffffffffffff)
 
-        client = OpenAI(base_url=base_url, api_key="EMPTY")
+        client = OpenAI(base_url=DEFAULT_BASE_URL, api_key="EMPTY")
         messages = [
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_prompt},
@@ -200,7 +200,7 @@ class TextGeneration:
         elapsed = time.time() - t0
 
         content = resp.choices[0].message.content
-        log = _build_log(model, base_url, resp.usage, elapsed,
+        log = _build_log(model, resp.usage, elapsed,
                          extra=[f"Seed: {actual_seed}"])
         return (content, log)
 
